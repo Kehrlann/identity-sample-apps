@@ -27,8 +27,4 @@ dependencies {
 	implementation "org.springframework.security:spring-security-oauth2-client:$springSecurityVersion"
 	implementation "org.springframework.security:spring-security-oauth2-jose:$springSecurityVersion"
 	implementation "org.springframework.security:spring-security-config:$springSecurityVersion"
-	implementation "io.pivotal.cfenv:java-cfenv-boot-pivotal-sso:$cfEnvSsoVersion"
-	if (useCfCertificateTruster) {
-		implementation "io.pivotal.spring.cloud:cloudfoundry-certificate-truster:$cfCertificateTrusterVersion"
-	}
 }
