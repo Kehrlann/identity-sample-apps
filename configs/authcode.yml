@@ -1,0 +1,93 @@
+#@ name = "authcode"
+#@ namespace = "workloads"
+#@
+
+---
+apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+kind: ClassClaim
+metadata:
+  name: #@ name
+  namespace: #@ namespace
+spec:
+  classRef:
+    name: ci
+  parameters:
+    workloadRef:
+      name: #@ name
+    redirectPaths:
+      - #@ "/login/oauth2/code/{}".format(name)
+    displayName: "AppSSO Starter Java"
+    authorizationGrantTypes:
+      - client_credentials
+      - authorization_code
+      - refresh_token
+    scopes:
+      - name: openid
+      - name: profile
+      - name: email
+      - description: bestows the ultimate power
+        name: coffee.make
+    clientAuthenticationMethod: client_secret_basic
+    requireUserConsent: false
+
+---
+apiVersion: carto.run/v1alpha1
+kind: Workload
+metadata:
+  name: #@ name
+  namespace: #@ namespace
+  labels:
+    apps.tanzu.vmware.com/workload-type: web
+    app.kubernetes.io/part-of: #@ name
+spec:
+  build:
+    env:
+      - name: "BP_JVM_VERSION"
+        value: "8"
+  env:
+    - name: RESOURCE_URL
+      value: "http://resource-server.workloads.daniel.identity.team"
+    - name: LOGGING_LEVEL_ORG_SPRINGFRAMEWORK_WEB_CLIENT
+      value: TRACE
+  params:
+    - name: live-update
+      value: "true"
+  serviceClaims:
+    - name: #@ name
+      ref:
+        apiVersion: services.apps.tanzu.vmware.com/v1alpha1
+        kind: ClassClaim
+        name: #@ name
+  source:
+    git:
+      ref:
+        branch: spring-boot-2.3
+      url: https://github.com/Kehrlann/identity-sample-apps.git
+    subPath: "authcode"
+
+
+---
+apiVersion: sso.apps.tanzu.vmware.com/v1alpha1
+kind: ClientRegistration
+metadata:
+  name: localhost
+  namespace: #@ namespace
+spec:
+  authServerSelector:
+    matchLabels:
+      name: ci
+  redirectURIs:
+    - #@ "http://127.0.0.1:8080/login/oauth2/code/{}".format(name)
+  displayName: "AppSSO Starter Java"
+  authorizationGrantTypes:
+    - client_credentials
+    - authorization_code
+  scopes:
+    - name: openid
+    - name: profile
+    - name: email
+    - description: bestows the ultimate power
+      name: coffee.make
+  clientAuthenticationMethod: client_secret_basic
+  requireUserConsent: false
+
