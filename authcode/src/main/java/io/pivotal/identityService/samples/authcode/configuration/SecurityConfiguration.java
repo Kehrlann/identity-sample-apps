@@ -14,6 +14,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        //@formatter:off
         http
                 .authorizeRequests()
                     .antMatchers("/").permitAll()
@@ -22,5 +23,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     .oauth2Login()
                 .and()
                     .logout().logoutSuccessHandler(uaaLogoutSuccessHandler);
+        //@formatter:on
     }
+
 }
