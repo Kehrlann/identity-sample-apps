@@ -3,7 +3,6 @@ package io.pivotal.identityService.samples.authcode.app;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.tomcat.util.codec.binary.Base64;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.oauth2.client.OAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.annotation.RegisteredOAuth2AuthorizedClient;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
@@ -20,9 +19,6 @@ import java.util.Map;
 
 @Controller
 public class InfoController {
-    @Value("${ssoServiceUrl:placeholder}")
-    String ssoServiceUrl;
-
     private ObjectMapper objectMapper;
 
     public InfoController(ObjectMapper objectMapper) {
@@ -34,17 +30,8 @@ public class InfoController {
             Model model,
             OAuth2AuthenticationToken authentication,
             @RegisteredOAuth2AuthorizedClient OAuth2AuthorizedClient authorizedClient) throws Exception {
-        // Check if app has been bound to SSO
-        if (ssoServiceUrl.equals("placeholder")) {
-            model.addAttribute("header", "Warning: You need to bind to the SSO service.");
-            model.addAttribute("warning", "Please bind your app to restore regular functionality");
-            return "configure_warning";
-        }
-
         // Display user information
         DefaultOidcUser defaultOidcUser = (DefaultOidcUser) authentication.getPrincipal();
-        model.addAttribute("ssoServiceUrl", ssoServiceUrl);
-
         OidcUserInfo userInfo = defaultOidcUser.getUserInfo();
         if (userInfo != null) {
             model.addAttribute("user_info", toPrettyJsonString(userInfo.getClaims()));

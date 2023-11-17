@@ -21,9 +21,6 @@
       <a href="/todos">TODO List (You need to configure the Resource Server sample app before using this)</a>
     </li>
     <li>
-      <a target="uaa" th:href="|${ssoServiceUrl}/profile|">See your account profile (so you can de-authorize this client)</a>
-    </li>
-    <li>
       <form th:action="|/logout|" method="POST">
         <!--
           By default, spring security recommend logout in the form of a POST to protect form CSRF attacks
