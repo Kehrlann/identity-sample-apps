@@ -1,7 +1,9 @@
 rootProject.name = 'identity-sample-apps'
 
-include 'journeys'
 include 'resource-server'
 include 'authcode'
 include 'client-credentials'
 include 'authcode-client-credentials'
+
+// TODO: Temporarily exclude
+// include 'journeys'
