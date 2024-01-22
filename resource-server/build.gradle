@@ -8,18 +8,14 @@ apply plugin: 'io.spring.dependency-management'
 group = 'io.pivotal.identityService'
 sourceCompatibility = '1.8'
 
-ext {
-	springVersion = '2.5.15'
-	springSecurityVersion = '5.3.4.RELEASE'
-}
 
 repositories {
 	mavenCentral()
 }
 
 dependencies {
-	implementation "org.springframework.boot:spring-boot-starter-web:$springVersion"
-	implementation "org.springframework.security:spring-security-oauth2-resource-server:$springSecurityVersion"
-	implementation "org.springframework.security:spring-security-oauth2-jose:$springSecurityVersion"
-	implementation "org.springframework.security:spring-security-config:$springSecurityVersion"
+	implementation "org.springframework.boot:spring-boot-starter-web"
+	implementation "org.springframework.security:spring-security-oauth2-jose"
+	implementation "org.springframework.security:spring-security-oauth2-resource-server"
+	implementation "org.springframework.security:spring-security-config"
 }
