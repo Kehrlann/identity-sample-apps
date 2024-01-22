@@ -57,3 +57,4 @@ applications:
      # SSO_SHOW_ON_HOME_PAGE: <true/false>
 
      # *** END: env vars for the service broker to use during bind ***
+     JBP_CONFIG_OPEN_JDK_JRE: "{ jre: { version: 17.+ } }"

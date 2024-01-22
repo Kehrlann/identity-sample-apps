@@ -66,3 +66,4 @@ applications:
      # SSO_ICON: <base64 encoded image - do not exceed 64kb>
      # SSO_LAUNCH_URL: <url>
      # SSO_SHOW_ON_HOME_PAGE: <true/false>
+     JBP_CONFIG_OPEN_JDK_JRE: "{ jre: { version: 17.+ } }"
