@@ -6,4 +6,4 @@ include 'client-credentials'
 include 'authcode-client-credentials'
 
 // TODO: Temporarily exclude
-// include 'journeys'
+include 'journeys'
